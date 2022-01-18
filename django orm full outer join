@@ -1,0 +1,37 @@
+full outer join:
+
+for v in Classes.objects.annotate(is_booked = F('userclass__is_booked')).values('class_topic','class_description','is_booked'):
+                print(v)
+
+
+
+
+
+
+class BookClass(APIView):
+    def get(self, request):
+        try:
+            data = request.GET
+
+            # gym = GymProfile.objects.get(record_id=kwargs.get('restaurant_id'))
+            print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
+
+            for v in Classes.objects.annotate(is_booked = F('userclass__is_booked'),booked_date=F('userclass__booked_date'),booked_day=F('userclass__booked_day')).values('class_topic','class_description','is_booked','booked_date','booked_day'):
+                print(v)
+
+            # gym = GymProfile.objects.get(uuid =data.get("gym_id"))
+            # print("999",gym)
+            
+            # context = {
+                
+            #     'categories': UserClass.objects.filter(gym=gym).prefetch_related(
+            #         Prefetch(
+                        
+            #             queryset=Classes.objects.filter(gym=gym)
+            #         )
+            #     )
+            # }
+            # print(context)
+            return Response('hiiiiiiiiiiiiiiiiiiiii')
+        except Exception as e:
+            return Response('book class not found')
